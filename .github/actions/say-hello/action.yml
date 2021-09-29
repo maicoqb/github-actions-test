@@ -17,5 +17,6 @@ runs:
     - id: random-number-generator
       run: |
         APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
+        echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
         echo "::set-output name=random-id::$(echo $APP_VERSION)"
       shell: bash
