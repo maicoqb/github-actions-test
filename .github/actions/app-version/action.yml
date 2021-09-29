@@ -1,14 +1,18 @@
 name: 'App Version'
-description: 'Returns App Version'
+description: """
+Returns App Version
+You can get the app version from app-version variable
+Also set a $APP_VERSION environment variable with the same value
+"""
 outputs:
   app-version:
     description: "Application version"
-    value: ${{ steps.app-version.outputs.random-id }}
+    value: ${{ steps.app-version.outputs.app-version }}
 runs:
   using: "composite"
   steps:
     - id: app-version
       run: |
         APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
-        echo "::set-output name=random-id::$(echo $APP_VERSION)"
+        echo "::set-output name=app-version::$(echo $APP_VERSION)"
       shell: bash
