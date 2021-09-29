@@ -1,30 +1,21 @@
-name: 'Export Version'
-description: 'Export Gradle Version and Docker Tag'
+name: 'Hello World'
+description: 'Greet someone'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
 outputs:
-  app-version:
-    description: "Application version"
-    value: ${{ steps.app-version.outputs.app-version }}
-  docker-tag:
-    description: "Docker tag"
-    value: ${{ steps.docker-tag.outputs.docker-tag }}
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-    - name: get app version
+    - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
-      run: |
-        APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
-        echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
-    - name: get docker tag
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
-      run: |
-        DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION-${GITHUB_SHA::8}
-        echo "DOCKER_TAG=$DOCKER_TAG" >> $GITHUB_ENV
-    - id: app-version
-      run: echo "::set-ouput name=app-version::$(echo $APP_VERSION)"
+    - run: ${{ github.action_path }}/goodbye.sh
       shell: bash
-    - id: docker-tag
-      run: echo "::set-ouput name=docker-tag::$(echo $DOCKER_TAG)"
-      shell: bash
-
-

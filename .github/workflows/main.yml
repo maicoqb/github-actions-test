@@ -8,18 +8,15 @@ on:
       - '**'
 
 jobs:
-  blah:
-    name: BLAH
+  hello_world_job:
     runs-on: ubuntu-latest
+    name: A job to say hello
     steps:
-      - uses: actions/checkout@v1
-      - id: app-version
-        uses: ./.github/actions/export-version
-      - name: use version
-        run: |
-          echo "env.APP_VERSION: ${{ env.APP_VERSION }}"
-          echo "env.DOCKER_TAG: ${{ env.DOCKER_TAG }}"
-          echo "steps.app-version.outputs.app-version: ${{ steps.app-version.outputs.app-version }}"
-          echo "steps.app-version.outputs.docker-version: ${{ steps.app-version.outputs.docker-version }}"
+      - uses: actions/checkout@v2
+      - id: foo
+        uses: actions/hello-world-composite-action@v1
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
 
