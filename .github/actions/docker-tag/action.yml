@@ -9,6 +9,10 @@ inputs:
     description: 'App Version'
     required: true
     default: ''
+  with-sha:
+    description: 'Should return docker tag with gihub-sha'
+    required: true
+    default: "true"
 outputs:
   docker-tag:
     description: "Docker tag"
@@ -18,9 +22,13 @@ runs:
   steps:
     - id: docker-tag
       run: |
-        echo
         APP_VERSION=${{ inputs.app-version }}
-        DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION-${GITHUB_SHA::8}
+        DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION
+
+        if [ "${{ inputs.with-sha }}" == "true" ]; then
+          DOCKER_TAG=$DOCKER_TAG-${GITHUB_SHA::8}
+        fi
+
         echo "DOCKER_TAG=$DOCKER_TAG" >> $GITHUB_ENV
         echo "::set-output name=docker-tag::$(echo $DOCKER_TAG)"
       shell: bash

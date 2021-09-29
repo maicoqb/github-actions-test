@@ -19,6 +19,7 @@ jobs:
         uses: ./.github/actions/docker-tag
         with:
           app-version: ${{ steps.app-version.outputs.app-version }}
+          with-sha: true
       - run: |
           echo "steps.app-version.outputs.app-version:" ${{ steps.app-version.outputs.app-version }}
         shell: bash
