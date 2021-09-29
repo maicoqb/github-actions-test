@@ -11,19 +11,20 @@ runs:
   using: "composite"
   steps:
     - name: get app version
-      id: app-version
       shell: bash
       run: |
         APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
-        echo "::set-ouput name=app-version::$(echo $APP_VERSION)"
         echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
-
     - name: get docker tag
-      id: docker-tag
       shell: bash
       run: |
         DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION-${GITHUB_SHA::8}
-        echo "::set-ouput name=docker-tag::$(echo $DOCKER_TAG)"
         echo "DOCKER_TAG=$DOCKER_TAG" >> $GITHUB_ENV
+    - id: app-version
+      run: echo "::set-ouput name=app-version::$(echo $APP_VERSION)"
+      shell: bash
+    - id: docker-tag
+      run: echo "::set-ouput name=docker-tag::$(echo $DOCKER_TAG)"
+      shell: bash
 
 
