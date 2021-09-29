@@ -6,7 +6,7 @@ inputs:
     required: true
     default: 'World'
 outputs:
-  random-number:
+  app-version:
     description: "Random number"
     value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:

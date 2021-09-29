@@ -17,6 +17,6 @@ jobs:
         uses: ./.github/actions/say-hello
         with:
           who-to-greet: 'Mona the Octocat'
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      - run: echo random-number ${{ steps.foo.outputs.app-version }}
         shell: bash
 
