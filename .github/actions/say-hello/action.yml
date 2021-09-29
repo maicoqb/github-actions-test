@@ -15,5 +15,7 @@ runs:
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
     - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      run: |
+        APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
+        echo "::set-output name=random-id::$(echo $APP_VERSION)"
       shell: bash
