@@ -1,0 +1,25 @@
+name: 'Docker Tag'
+description: "
+Returns Docker Tag
+You can get the docker tag from docker-tag variable
+Also set a $DOCKER_TAG environment variable with the same value"
+
+inputs:
+  app-version:
+    description: 'App Version'
+    required: true
+    default: ''
+outputs:
+  docker-tag:
+    description: "Docker tag"
+    value: ${{ steps.docker-tag.outputs.docker-tag }}
+runs:
+  using: "composite"
+  steps:
+    - id: docker-tag
+      run: |
+        APP_VERSION=${{ inputs.who-to-greet }}
+        DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION-${GITHUB_SHA::8}
+        echo "DOCKER_TAG=$DOCKER_TAG" >> $GITHUB_ENV
+        echo "::set-output name=docker-tag::$(echo $DOCKER_TAG)"
+      shell: bash

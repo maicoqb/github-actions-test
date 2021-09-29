@@ -15,7 +15,14 @@ jobs:
       - uses: actions/checkout@v1
       - id: app-version
         uses: ./.github/actions/app-version
+      - id: docker-tag
+        uses: ./.github/actions/docker-tag
+        with:
+          app-version: ${{ steps.app-version.outputs.app-version }}
       - run: |
-          echo "steps.foo.outputs.app-version:" ${{ steps.app-version.outputs.app-version }}
+          echo "steps.app-version.outputs.app-version:" ${{ steps.app-version.outputs.app-version }}
+        shell: bash
+      - run: |
+          echo "steps.docker-tag.outputs.docker-tag:" ${{ steps.docker-tag.outputs.docker-tag }}
         shell: bash
 
