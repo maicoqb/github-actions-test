@@ -1,8 +1,9 @@
 name: 'App Version'
-description: |
+description: "
 Returns App Version
 You can get the app version from app-version variable
-Also set a $APP_VERSION environment variable with the same value
+Also set a $APP_VERSION environment variable with the same value"
+
 outputs:
   app-version:
     description: "Application version"
