@@ -21,4 +21,5 @@ jobs:
           echo "env.DOCKER_TAG: ${{ env.DOCKER_TAG }}"
           echo "steps.app-version.outputs.app-version: ${{ steps.app-version.outputs.app-version }}"
           echo "steps.app-version.outputs.docker-version: ${{ steps.app-version.outputs.docker-version }}"
+        shell: bash
 
