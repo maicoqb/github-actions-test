@@ -3,13 +3,12 @@ description: 'Returns App Version'
 outputs:
   app-version:
     description: "Application version"
-    value: ${{ steps.app-version-getter.outputs.random-id }}
+    value: ${{ steps.app-version.outputs.random-id }}
 runs:
   using: "composite"
   steps:
-    - id: app-version-getter
+    - id: app-version
       run: |
         APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
-        echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
         echo "::set-output name=random-id::$(echo $APP_VERSION)"
       shell: bash

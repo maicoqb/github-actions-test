@@ -13,8 +13,9 @@ jobs:
     name: A job to say hello
     steps:
       - uses: actions/checkout@v1
-      - id: foo
+      - id: app-version
         uses: ./.github/actions/app-version
-      - run: echo random-number ${{ steps.foo.outputs.app-version }}
+      - run: |
+          echo "steps.foo.outputs.app-version:" ${{ steps.app-version.outputs.app-version }}
         shell: bash
 
