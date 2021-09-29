@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - id: app-version
-        uses: ./.github/actions/export-version/action.yml
+        uses: .github/actions/export-version
       - name: use version
         run: |
           echo "env.APP_VERSION: ${{ env.APP_VERSION }}"
