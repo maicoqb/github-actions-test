@@ -1,0 +1,26 @@
+name: Main Workflow
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags-ignore:
+      - '**'
+
+jobs:
+  blah:
+    name: BLAH
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@1
+      - name: export version
+        run: |
+          APP_VERSION=`grep -oP 'version = [^"]*"\K[^"]*' build.gradle*`
+          echo "APPLICATION VERSION:" $APP_VERSION
+
+          DOCKER_TAG=${GITHUB_REF##*/}-$APP_VERSION-${GITHUB_SHA::8}
+          echo "DOCKER_TAG=$DOCKER_TAG" >> $GITHUB_ENV
+      - name: use version
+        run: |
+          echo "${{ env.DOCKER_TAG }}"
+
